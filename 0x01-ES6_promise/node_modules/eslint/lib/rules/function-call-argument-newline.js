@@ -9,15 +9,15 @@
 // Rule Definition
 //------------------------------------------------------------------------------
 
-/** @type {import('../shared/types').Rule} */
 module.exports = {
     meta: {
         type: "layout",
 
         docs: {
-            description: "Enforce line breaks between arguments of a function call",
+            description: "enforce line breaks between arguments of a function call",
+            category: "Stylistic Issues",
             recommended: false,
-            url: "https://eslint.org/docs/latest/rules/function-call-argument-newline"
+            url: "https://eslint.org/docs/rules/function-call-argument-newline"
         },
 
         fixable: "whitespace",
@@ -35,7 +35,7 @@ module.exports = {
     },
 
     create(context) {
-        const sourceCode = context.sourceCode;
+        const sourceCode = context.getSourceCode();
 
         const checkers = {
             unexpected: {

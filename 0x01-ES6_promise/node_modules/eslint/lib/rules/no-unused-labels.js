@@ -9,15 +9,15 @@
 // Rule Definition
 //------------------------------------------------------------------------------
 
-/** @type {import('../shared/types').Rule} */
 module.exports = {
     meta: {
         type: "suggestion",
 
         docs: {
-            description: "Disallow unused labels",
+            description: "disallow unused labels",
+            category: "Best Practices",
             recommended: true,
-            url: "https://eslint.org/docs/latest/rules/no-unused-labels"
+            url: "https://eslint.org/docs/rules/no-unused-labels"
         },
 
         schema: [],
@@ -30,7 +30,7 @@ module.exports = {
     },
 
     create(context) {
-        const sourceCode = context.sourceCode;
+        const sourceCode = context.getSourceCode();
         let scopeInfo = null;
 
         /**

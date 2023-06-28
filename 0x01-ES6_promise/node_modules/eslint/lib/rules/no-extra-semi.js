@@ -16,15 +16,15 @@ const astUtils = require("./utils/ast-utils");
 // Rule Definition
 //------------------------------------------------------------------------------
 
-/** @type {import('../shared/types').Rule} */
 module.exports = {
     meta: {
         type: "suggestion",
 
         docs: {
-            description: "Disallow unnecessary semicolons",
+            description: "disallow unnecessary semicolons",
+            category: "Possible Errors",
             recommended: true,
-            url: "https://eslint.org/docs/latest/rules/no-extra-semi"
+            url: "https://eslint.org/docs/rules/no-extra-semi"
         },
 
         fixable: "code",
@@ -36,7 +36,7 @@ module.exports = {
     },
 
     create(context) {
-        const sourceCode = context.sourceCode;
+        const sourceCode = context.getSourceCode();
 
         /**
          * Reports an unnecessary semicolon error.
@@ -54,7 +54,7 @@ module.exports = {
                      * tokens to avoid conflicting with semi.
                      * https://github.com/eslint/eslint/issues/7928
                      */
-                    return new FixTracker(fixer, context.sourceCode)
+                    return new FixTracker(fixer, context.getSourceCode())
                         .retainSurroundingTokens(nodeOrToken)
                         .remove(nodeOrToken);
                 }
@@ -98,7 +98,7 @@ module.exports = {
                         "WithStatement"
                     ];
 
-                if (!allowedParentTypes.includes(parent.type)) {
+                if (allowedParentTypes.indexOf(parent.type) === -1) {
                     report(node);
                 }
             },
@@ -117,7 +117,7 @@ module.exports = {
              * @param {Node} node A MethodDefinition node of the start point.
              * @returns {void}
              */
-            "MethodDefinition, PropertyDefinition, StaticBlock"(node) {
+            MethodDefinition(node) {
                 checkForPartOfClassBody(sourceCode.getTokenAfter(node));
             }
         };
